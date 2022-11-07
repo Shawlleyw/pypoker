@@ -1,6 +1,7 @@
 import os
 import uuid
 
+import logging
 import gevent
 import redis
 from flask import Flask, render_template, redirect, session, url_for, request
@@ -99,6 +100,7 @@ def poker_game(ws: WebSocket, connection_channel: str):
             try:
                 while True:
                     message = channel1.recv_message()
+                    logging.info(message)
                     if "message_type" in message and message["message_type"] == "disconnect":
                         raise ChannelError
                     channel2.send_message(message)
